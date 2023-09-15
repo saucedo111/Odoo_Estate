@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "my_module",
+    'name':"Real Estate",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -28,6 +28,8 @@
         'views/views.xml',
         'views/templates.xml',
     ],
+    'installable': True,
+    'application': True,
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
