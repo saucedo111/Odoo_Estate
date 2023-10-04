@@ -1,6 +1,24 @@
 <odoo>
+    <record id="estate_property_view_search" model="ir.ui.view">
+        <field name="name">estate.property.view.search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string='Title' decoration-it='1'/>
+                <field name="postcode" decoration-it='1'/>
+                <field name="bedrooms" decoration-it='1'/>
+                <field name="living_area" decoration-it='1'/>
+                <field name="selling_price" decoration-it='1'/>
+                <field name="facades" decoration-it='1'/>
+                <filter name="available" string="Available"
+                        domain="['|',('state','=','New'), ('state','=','Offer Received')]"/>
+                <filter name="postcode" string='Postcode' context="{'group_by':'postcode'}"/>
+            </search>
+        </field>
+    </record>
+
     <record id="estate.estate_property" model="ir.actions.act_window">
-        <field name="name">estate property</field>
+        <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -8,8 +26,10 @@
         <field name="name">estate.property.form</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <form string="estate property">
+            <form string="estate property" create='true' edit='true'>
                 <sheet>
+                    <field name="name" style="font-size:24pt;"/>
+
                     <group>
                         <group>
                             <field name="postcode"/>
@@ -23,6 +43,7 @@
                     <notebook>
                         <page string="Description">
                             <group>
+                                <field name='description'/>
                                 <field name="bedrooms"/>
                                 <field name="living_area"/>
                                 <field name="facades"/>
