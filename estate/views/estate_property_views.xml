@@ -13,6 +13,7 @@
                 <filter name="available" string="Available"
                         domain="['|',('state','=','New'), ('state','=','Offer Received')]"/>
                 <filter name="postcode" string='Postcode' context="{'group_by':'postcode'}"/>
+                <field name="property_type_id" string = "type"/>
             </search>
         </field>
     </record>
@@ -22,6 +23,7 @@
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <record id="estate_property_view_form" model="ir.ui.view">
         <field name="name">estate.property.form</field>
         <field name="model">estate.property</field>
@@ -29,9 +31,10 @@
             <form string="estate property" create='true' edit='true'>
                 <sheet>
                     <field name="name" style="font-size:24pt;"/>
-
+                    <field name="tag_ids" widget = "many2many_tags"/>
                     <group>
                         <group>
+                            <field name="property_type_id" string="Property Type"/>
                             <field name="postcode"/>
                             <field name="date_availability" string="Available From"/>
                         </group>
@@ -53,6 +56,13 @@
                                 <field name="garden_orientation"/>
                             </group>
                         </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="salesperson_id" string="Salesperson"/>
+                                <field name="buyer_id" string="Buyer"/>
+
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
@@ -64,13 +74,14 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
-                <field name="postcode"/>
-                <field name="bedrooms"/>
-                <field name="living_area"/>
-                <field name="expected_price"/>
-                <field name="selling_price"/>
-                <field name="date_availability" string="Available From"/>
+                <field name="name" width = '100px'/>
+                <field name="postcode" width = '100px'/>
+                <field name="bedrooms" width = '100px'/>
+                <field name="living_area" width = '100px'/>
+                <field name="expected_price" width = '100px'/>
+                <field name="selling_price" width = '100px'/>
+                <field name="date_availability" string="Available From" width = '100px'/>
+                <field name="tag_ids" widget="many2many_tags" width = '100px'/>
             </tree>
         </field>
     </record>
