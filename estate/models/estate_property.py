@@ -42,3 +42,4 @@ class estate_Property(models.Model):
     def _compute_best_price(self):
         for record in self:
             record.best_price = max(record.offer_ids.mapped("price")) if record.offer_ids else float(0)
+
