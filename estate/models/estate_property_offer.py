@@ -33,3 +33,13 @@ class estate_property_offer(models.Model):
                 else:
                     record.validity = (record.date_deadline - date.today()).days
 
+    def action_refuse(self):
+        for record in self:
+            record.status = 'refused'
+
+    def action_accept(self):
+        for record in self:
+            record.status = 'accepted'
+
+
+

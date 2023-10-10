@@ -1,5 +1,5 @@
 from dateutil.relativedelta import relativedelta
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions
 
 
 class estate_Property(models.Model):
@@ -23,7 +23,7 @@ class estate_Property(models.Model):
     garden = fields.Boolean(default=True)
     garden_area = fields.Integer()
     garden_orientation = fields.Selection([('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
-                                          default='north')
+                                          default='south')
     property_type_id = fields.Many2one("estate.property.type")
     buyer_id = fields.Many2one("res.partner", string="Buyer", copy=False)
     salesperson_id = fields.Many2one("res.users", string="Salesperson", default=lambda self: self.env.user)
@@ -43,3 +43,21 @@ class estate_Property(models.Model):
         for record in self:
             record.best_price = max(record.offer_ids.mapped("price")) if record.offer_ids else float(0)
 
+    @api.onchange("garden")
+    def _onchange_garden(self):
+        self.garden_area = 10 if self.garden else 0
+        self.garden_orientation = "north" if self.garden_orientation != 'north' else ""
+
+    def action_cancel(self):
+        for record in self:
+            if record.state == "sold":
+                raise exceptions.UserError("You cannot cancel a sold property")
+            else:
+                record.state = "canceled"
+
+    def action_sold(self):
+        for record in self:
+            if record.state == "canceled":
+                raise exceptions.UserError("You cannot sell a canceled property")
+            else:
+                record.state = "sold"
