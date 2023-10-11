@@ -32,8 +32,15 @@ class estate_Property(models.Model):
     total_area = fields.Float(compute="_compute_total_area")
 
     _sql_constraints = [('check_expected_price', 'CHECK(expected_price > 0)', 'The expected price must be positive'),
-        ('check_selling_price', 'CHECK(selling_price > 0)', 'The selling price must be positive'),
-       ]
+                        ('check_selling_price', 'CHECK(selling_price > 0)', 'The selling price must be positive'), ]
+
+    @api.constrains('expected_price', 'selling_price')
+    def _check_prices(self):
+        for record in self:
+            if record.selling_price == 0:
+                continue
+            if record.selling_price < 0.9 * record.expected_price:
+                raise exceptions.ValidationError("The selling price must be greater than 90% of the expected price")
 
     @api.depends("living_area", "garden_area")
     def _compute_total_area(self):

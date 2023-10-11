@@ -11,7 +11,18 @@
         <field name="arch" type="xml">
             <form string="estate property type" create='true' edit='true'>
                 <sheet>
-                  <field name="name" style="font-size:24pt;"/>
+                    <field name="name" style="font-size:24pt;"/>
+                    <notebook>
+                        <page string="Properties">
+                            <field name="property_ids">
+                                <tree string="Properties">
+                                    <field name="name" string="Title"/>
+                                    <field name="expected_price" string="Expected Price"/>
+                                    <field name="state" string="Status"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
