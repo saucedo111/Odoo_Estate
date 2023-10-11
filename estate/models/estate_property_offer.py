@@ -1,7 +1,6 @@
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
-from odoo.tools import date_utils
 from odoo import models, fields, api
 
 
@@ -17,9 +16,8 @@ class estate_property_offer(models.Model):
     date_deadline = fields.Date(compute="_compute_date_deadline", inverse="_inverse_date_deadline")
     create_date = fields.Date(default=fields.Date.today())
 
-    _sql_constraints = [
-        ('check_price', 'CHECK(price > 0)', 'The price must be positive')
-    ]
+    _sql_constraints = [('check_price', 'CHECK(price > 0)', 'The price must be positive')]
+
     @api.depends('create_date', 'validity')
     def _compute_date_deadline(self):
         for record in self:
@@ -47,7 +45,3 @@ class estate_property_offer(models.Model):
             self.property_id.state = 'offer_accepted'
             self.property_id.buyer_id = self.partner_id
             self.property_id.selling_price = self.price
-
-
-
-

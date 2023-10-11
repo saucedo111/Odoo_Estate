@@ -32,13 +32,13 @@
                 <header>
                     <button name="action_cancel" string="Cancel" type="object" class="oe_highlight"/>
                     <button name="action_sold" string="Sold" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <field name="name" style="font-size:24pt;"/>
                     <field name="tag_ids" widget="many2many_tags"/>
                     <group>
                         <group>
-                            <field name="state" string="Status"/>
                             <field name="property_type_id" string="Property Type"/>
                             <field name="postcode"/>
                             <field name="date_availability" string="Available From"/>
@@ -70,7 +70,7 @@
                             </group>
                         </page>
                         <page string="Offers">
-                                <field name="offer_ids"/>
+                            <field name="offer_ids"/>
                         </page>
                     </notebook>
                 </sheet>
