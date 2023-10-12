@@ -13,6 +13,7 @@
                 <sheet>
                     <group>
                         <field name="name" style="font-size:24pt;"/>
+                        <field name="color"/>
                     </group>
                 </sheet>
             </form>

@@ -30,16 +30,16 @@
         <field name="arch" type="xml">
             <form string="estate property" create='1' edit='1'>
                 <header>
-                    <button name="action_cancel" string="Cancel" type="object" class="oe_highlight"/>
-                    <button name="action_sold" string="Sold" type="object" class="oe_highlight"/>
+                    <button name="action_cancel" string="Cancel" type="object" class="oe_highlight" states="new"/>
+                    <button name="action_sold" string="Sold" type="object" class="oe_highlight" states="new"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <field name="name" style="font-size:24pt;"/>
-                    <field name="tag_ids" widget="many2many_tags"/>
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                     <group>
                         <group>
-                            <field name="property_type_id" string="Property Type"/>
+                            <field name="property_type_id" string="Property Type" options="{'no_create': True}"/>
                             <field name="postcode"/>
                             <field name="date_availability" string="Available From"/>
                         </group>
@@ -58,8 +58,8 @@
                                 <field name="facades"/>
                                 <field name="garage"/>
                                 <field name="garden"/>
-                                <field name="garden_area"/>
-                                <field name="garden_orientation"/>
+                                <field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}"/>
+                                <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
                                 <field name="total_area"/>
                             </group>
                         </page>
@@ -70,7 +70,9 @@
                             </group>
                         </page>
                         <page string="Offers">
-                            <field name="offer_ids"/>
+                            <field name="offer_ids"
+                                   attrs="{'readonly': [('state', '!=', 'new'), ('state', '!=', 'offer_received')]}"/>
+
                         </page>
                     </notebook>
                 </sheet>
