@@ -60,6 +60,11 @@ class estate_Property(models.Model):
         self.garden_area = 10 if self.garden else 0
         self.garden_orientation = "north" if self.garden_orientation != 'north' else ""
 
+    @api.onchange("offer_ids")
+    def _onchange_offer_ids(self):
+        if self.state == "new" and self.offer_ids:
+            self.state = "offer_received"
+
     def action_cancel(self):
         for record in self:
             if record.state == "sold":

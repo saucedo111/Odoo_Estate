@@ -18,7 +18,12 @@ as part of the addons command through CLI(Don't forget to install the app after)
 <br>
 If running with Odoo SH(cloud solution), clone and push to the
 repo and install the module from the apps menu.
+<br>
+<br>
+If using as a reference for Odoo developer tutorial, check the commit history if you can't find the solution line 
+within the codebase easily.
+The commit message should offer a hint as to what lesson it was for. :thumbsup:
 
 ## Pictures
-Coming soon to showcase installation and usage
+Coming soon to showcase installation and usage :construction_worker:
 

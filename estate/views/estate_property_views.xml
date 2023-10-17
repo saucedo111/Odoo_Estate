@@ -7,13 +7,14 @@
                 <field name="name" string='Title' decoration-it='1'/>
                 <field name="postcode" decoration-it='1'/>
                 <field name="bedrooms" decoration-it='1'/>
-                <field name="living_area" decoration-it='1'/>
+                <field name="living_area" decoration-it='1' filter_domain="[('living_area','>=', self)]"/>
                 <field name="selling_price" decoration-it='1'/>
                 <field name="facades" decoration-it='1'/>
                 <filter name="available" string="Available"
-                        domain="['|',('state','=','New'), ('state','=','Offer Received')]"/>
+                        domain="['|',('state','=','new'), ('state','=','offer_received')]"/>
                 <filter name="postcode" string='Postcode' context="{'group_by':'postcode'}"/>
                 <field name="property_type_id" string="type"/>
+                <field name="state" invisible='True'/>
             </search>
         </field>
     </record>
@@ -22,16 +23,19 @@
         <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_available': True}</field>
     </record>
 
     <record id="estate_property_view_form" model="ir.ui.view">
         <field name="name">estate.property.form</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <form string="estate property" create='1' edit='1'>
+            <form string="estate property">
                 <header>
-                    <button name="action_cancel" string="Cancel" type="object" class="oe_highlight" states="new"/>
-                    <button name="action_sold" string="Sold" type="object" class="oe_highlight" states="new"/>
+                    <button name="action_cancel" string="Cancel" type="object" class="oe_highlight"
+                            attrs="{'invisible':['|', ('state', '=', 'sold'), ('state', '=', 'canceled')]}"/>
+                    <button name="action_sold" string="Sold" type="object" class="oe_highlight"
+                            attrs="{'invisible':['|', ('state', '=', 'sold'), ('state', '=', 'canceled')]}"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -84,15 +88,18 @@
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree decoration-bf="state=='offer_accepted'"
+                  decoration-success="state=='offer_received' or state=='offer_accepted'"
+                  decoration-muted="state=='sold'">
                 <field name="name" width='100px'/>
                 <field name="postcode" width='100px'/>
                 <field name="bedrooms" width='100px'/>
                 <field name="living_area" width='100px'/>
                 <field name="expected_price" width='100px'/>
                 <field name="selling_price" width='100px'/>
-                <field name="date_availability" string="Available From" width='100px'/>
+                <field name="date_availability" string="Available From" width='100px' optional="hide"/>
                 <field name="tag_ids" widget="many2many_tags" width='100px'/>
+                <field name="state" optional="hide"/>
             </tree>
         </field>
     </record>
