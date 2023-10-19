@@ -1,7 +1,7 @@
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions
 
 
 class estate_property_offer(models.Model):
@@ -47,3 +47,8 @@ class estate_property_offer(models.Model):
             self.property_id.state = 'offer_accepted'
             self.property_id.buyer_id = self.partner_id
             self.property_id.selling_price = self.price
+
+    @api.model
+    def create(self, vals):
+        self.env['estate.property'].browse(vals['property_id']).receive()
+        return super().create(vals)
