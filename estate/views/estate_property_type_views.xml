@@ -22,6 +22,19 @@
         <field name="arch" type="xml">
             <form string="estate property type" create='true' edit='true'>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="action" name="%(action_offer)d" string="Offers"
+                                icon="fa-money">
+                            <div class="o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="offer_count"/>
+                                </span>
+                                <span class="o_stat_text">
+                                    Offers
+                                </span>
+                            </div>
+                        </button>
+                    </div>
                     <field name="name" style="font-size:24pt;"/>
                     <notebook>
                         <page string="Properties">
