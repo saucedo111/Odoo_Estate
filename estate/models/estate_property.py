@@ -46,7 +46,10 @@ class estate_Property(models.Model):
     @api.depends("living_area", "garden_area")
     def _compute_total_area(self):
         for record in self:
-            record.total_area = record.living_area + record.garden_area
+            if record.garden_area and record.living_area:
+                record.total_area = record.living_area + record.garden_area
+            else:
+                record.total_area = 0
 
     best_price = fields.Float(compute="_compute_best_price")
 
