@@ -6,6 +6,11 @@ Custom Odoo module for getting started guide, uploading to GitHub
 as a showcase for basic custom module development, and as a reference 
 as those can be scarce for Odoo.
 
+>**Rev.1**: This repo will be updated to include advanced tutorials and aspects of Odoo development.
+The following is an index of the lessons and features covered in this repo corresponding to the commit history.
+1. Getting Started(1-36)
+2. Unit Tests(37-?)
+
 ## How to use
 *This is assuming you have your environment configured and ready to go, if not consult
 Odoo dev docs getting started guide*
